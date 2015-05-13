@@ -26,7 +26,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('user_type', models.TextField(choices=[(b'doctor', b'Doctor'), (b'patient', b'Patient')])),
-                ('feedback', models.ManyToManyField(related_name='feedbacks', through='social.Feedback', to='social.UserProfile')),
+                ('feedback', models.ManyToManyField(related_name='user_feedbacks', through='social.Feedback', to='social.UserProfile')),
                 ('following', models.ManyToManyField(to='social.UserProfile', blank=True)),
                 ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL)),
             ],
@@ -34,11 +34,11 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='feedback',
             name='author',
-            field=models.ForeignKey(related_name='author', to='social.UserProfile'),
+            field=models.ForeignKey(related_name='feedback_author', to='social.UserProfile'),
         ),
         migrations.AddField(
             model_name='feedback',
             name='estimated',
-            field=models.ForeignKey(related_name='estimated', to='social.UserProfile'),
+            field=models.ForeignKey(related_name='feedback_estimated', to='social.UserProfile'),
         ),
     ]

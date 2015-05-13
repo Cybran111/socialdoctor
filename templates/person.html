@@ -36,8 +36,14 @@
 
   <!-- List group -->
         <ul class="list-group">
-            {% for feedback in person.feedback.all %}
-                <li class="list-group-item">{{ feedback }}</li>
+            {% for feedback in feedbacks %}
+
+                <li class="list-group-item">
+                    <span class="badge">{{ feedback.rating }}</span>
+                    <p>From: {{ feedback.author }}</p>
+                    <p>{{ feedback.text }}</p>
+
+                </li>
 
             {% endfor %}
 
