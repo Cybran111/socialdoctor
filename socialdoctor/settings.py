@@ -82,8 +82,6 @@ DATABASES = dict()
 # Production/debug databases
 if "DJANGO_PROD" in os.environ:
     DATABASES['default'] = dj_database_url.config()
-    # Enable Connection Pooling
-    DATABASES['default']['ENGINE'] = 'django_postgrespool'
 
 else:
     DATABASES['default'] = {'ENGINE': 'django.db.backends.sqlite3', 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'), }
