@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
 # Create your views here.
@@ -6,6 +7,8 @@ from social.models import UserProfile, Feedback
 
 
 def home(request):
+    if request.user.is_authenticated():
+        return redirect("person", person_id=request.user.id)
     return render(request, "base.html")
 
 
@@ -34,7 +37,7 @@ def person(request, person_id, feedback_form=None):
     feedback_form = feedback_form or FeedbackForm()
     return render(request, "person.html", {"person": person, "feedbacks": feedbacks, "form": feedback_form})
 
-
+@login_required
 def send_feedback(request, person_id):
     if request.method == 'POST':
         feedback_form = FeedbackForm(request.POST)

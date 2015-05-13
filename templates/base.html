@@ -17,6 +17,28 @@
 </head>
 
 <body>
+
+
+<nav style="z-index: 1000" class="navbar navbar-default" xmlns="http://www.w3.org/1999/html">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="{% url "home" %}"> Social Doctor</a>
+        </div>
+
+        <div class="navbar-right">
+        {% if user.is_authenticated %}
+
+                <p class="navbar-text"> Ви зайшли як {{ user }} </p>
+                <a type="button" href="{% url "logout" %}" class="btn btn-default navbar-btn">Вийти</a>
+            </div>
+        {% else %}
+                <p class="navbar-text">Ви неавторизовані</p>
+                <a href="{% url "login" %}" type="button" class="btn btn-default navbar-btn">Авторизуватися</a>
+        {% endif %}
+    </div>
+</nav>
+
+
     {% block navbar %} {% endblock %}
 <div class="container">
     {% block content %} {% endblock %}
