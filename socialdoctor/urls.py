@@ -9,6 +9,10 @@ urlpatterns = [
     url(r'^$', 'social.views.home', name='home'),
     url('^', include('django.contrib.auth.urls')),
     url(r'^register/$', 'social.views.register', name='register'),
+
+
+    url(r'^person/(?P<person_id>\d+)/$', 'social.views.person', name='person'),
+
     url(r'^admin/', include(admin.site.urls)),
 ]
 

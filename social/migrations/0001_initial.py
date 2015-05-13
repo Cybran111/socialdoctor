@@ -13,12 +13,32 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
+            name='Feedback',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('rating', models.IntegerField()),
+                ('text', models.TextField()),
+                ('date_created', models.DateTimeField(auto_now_add=True)),
+            ],
+        ),
+        migrations.CreateModel(
             name='UserProfile',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('user_type', models.TextField(choices=[(b'doctor', b'Doctor'), (b'patient', b'Patient')])),
-                ('followers', models.ManyToManyField(to=settings.AUTH_USER_MODEL)),
-                ('user', models.OneToOneField(related_name='related_user', to=settings.AUTH_USER_MODEL)),
+                ('feedback', models.ManyToManyField(related_name='feedbacks', through='social.Feedback', to='social.UserProfile')),
+                ('following', models.ManyToManyField(to='social.UserProfile', blank=True)),
+                ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL)),
             ],
+        ),
+        migrations.AddField(
+            model_name='feedback',
+            name='author',
+            field=models.ForeignKey(related_name='author', to='social.UserProfile'),
+        ),
+        migrations.AddField(
+            model_name='feedback',
+            name='estimated',
+            field=models.ForeignKey(related_name='estimated', to='social.UserProfile'),
         ),
     ]

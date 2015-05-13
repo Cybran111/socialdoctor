@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 
 # Create your views here.
 from social.forms import UserForm, UserProfileForm
+from social.models import UserProfile
 
 
 def home(request):
@@ -25,3 +26,8 @@ def register(request):
         uf = UserForm(prefix='user')
         upf = UserProfileForm(prefix='userprofile')
     return render(request, 'registration/register.html', dict(userform=uf, userprofileform=upf))
+
+
+def person(request, person_id):
+    person = UserProfile.objects.get(user=person_id)
+    return render(request, "person.html", {"person": person})
