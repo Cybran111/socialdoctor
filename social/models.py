@@ -13,7 +13,7 @@ class UserProfile(models.Model):
     following = models.ManyToManyField("self", symmetrical=False, blank=True)
     feedback = models.ManyToManyField("UserProfile", through="Feedback",
                                       through_fields=('author', 'estimated'),
-                                      related_name="feedbacks")
+                                      related_name="user_feedbacks")
     user_type = models.TextField(choices=TYPE_CHOICES)
 
     def __unicode__(self):
@@ -21,8 +21,11 @@ class UserProfile(models.Model):
 
 
 class Feedback(models.Model):
-    author = models.ForeignKey(UserProfile, related_name="author")
-    estimated = models.ForeignKey(UserProfile, related_name='estimated')
+    author = models.ForeignKey(UserProfile, related_name="feedback_author")
+    estimated = models.ForeignKey(UserProfile, related_name="feedback_estimated")
     rating = models.IntegerField()
     text = models.TextField()
     date_created = models.DateTimeField(auto_now_add=True)
+
+    def __unicode__(self):
+        return "From: %s, To: %s, Text: %s, Rating: %d" % (self.author, self.estimated, self.text, self.rating)

@@ -28,4 +28,20 @@
 
       </div>
     </div>
+
+
+    <div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading">Feedbacks</div>
+
+  <!-- List group -->
+        <ul class="list-group">
+            {% for feedback in person.feedback.all %}
+                <li class="list-group-item">{{ feedback }}</li>
+
+            {% endfor %}
+
+  </ul>
+</div>
+
 {% endblock %}
