@@ -1,14 +1,14 @@
-from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
 from django.db import models
 
 
 # Create your models here.
-class Profile(models.Model):
+class UserProfile(models.Model):
     TYPE_CHOICES = (
         ("doctor", 'Doctor'),
         ('patient', 'Patient'),
     )
 
-    user = models.OneToOneField(get_user_model())
-    followers = models.ManyToManyField(get_user_model())
+    user = models.OneToOneField(User, related_name='related_user')
+    followers = models.ManyToManyField(User)
     user_type = models.TextField(choices=TYPE_CHOICES)
