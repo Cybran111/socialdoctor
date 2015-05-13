@@ -1,1 +1,1 @@
-web: gunicorn Learning_system.wsgi --log-file -
+web: gunicorn socialdoctor.wsgi --log-file -
