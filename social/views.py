@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 
 # Create your views here.
-from social.forms import UserForm, UserProfileForm
+from social.forms import UserForm, UserProfileForm, FeedbackForm
 from social.models import UserProfile, Feedback
 
 
@@ -28,8 +28,19 @@ def register(request):
     return render(request, 'registration/register.html', dict(userform=uf, userprofileform=upf))
 
 
-def person(request, person_id):
+def person(request, person_id, feedback_form=None):
     person = UserProfile.objects.get(user=person_id)
     feedbacks = Feedback.objects.filter(estimated=person)
-    print feedbacks
-    return render(request, "person.html", {"person": person, "feedbacks": feedbacks})
+    feedback_form = feedback_form or FeedbackForm()
+    return render(request, "person.html", {"person": person, "feedbacks": feedbacks, "form": feedback_form})
+
+
+def send_feedback(request, person_id):
+    if request.method == 'POST':
+        feedback_form = FeedbackForm(request.POST)
+        if feedback_form.is_valid():
+            feedback = feedback_form.save(commit=False)
+            feedback.author = request.user.userprofile
+            feedback.estimated = UserProfile.objects.get(id=person_id)
+            feedback.save()
+    return redirect("person", person_id=person_id)

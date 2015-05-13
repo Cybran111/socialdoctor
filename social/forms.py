@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from social.models import UserProfile
+from social.models import UserProfile, Feedback
 
 
 class UserForm(forms.ModelForm):
@@ -13,3 +13,10 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ['user_type']
+
+
+class FeedbackForm(forms.ModelForm):
+    class Meta:
+        model = Feedback
+        fields = ['text', 'rating']
+

@@ -13,6 +13,8 @@ urlpatterns = [
 
     url(r'^person/(?P<person_id>\d+)/$', 'social.views.person', name='person'),
 
+    url(r'^person/(?P<person_id>\d+)/send_feedback/$', 'social.views.send_feedback', name='send_feedback'),
+
     url(r'^admin/', include(admin.site.urls)),
 ]
 
