@@ -51,7 +51,7 @@
 </div>
 
 
-    {% if uis_ser.authenticated %}
+    {% if user.is_authenticated %}
 
         <form action="{% url "send_feedback" person.id %}" method="POST" class="form-inline">
         {% csrf_token %}
