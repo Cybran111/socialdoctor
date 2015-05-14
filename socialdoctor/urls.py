@@ -7,8 +7,9 @@ urlpatterns = [
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^$', 'social.views.home', name='home'),
-    # url(r'^login$', 'django.contrib.auth.login', name='login'),
-    url('^', include('django.contrib.auth.urls')),
+    url(r'^login/$', 'django.contrib.auth.views.login', name='login'),
+    url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page': '/'}, name="logout",),
+    # url('^', include('django.contrib.auth.urls')),
     url(r'^register/$', 'social.views.register', name='register'),
 
 
