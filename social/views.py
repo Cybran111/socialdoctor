@@ -1,3 +1,4 @@
+from django.contrib.auth import  login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
@@ -24,6 +25,9 @@ def register(request):
             userprofile = upf.save(commit=False)
             userprofile.user = user
             userprofile.save()
+
+            login(request, authenticate(username=uf.cleaned_data['username'], password=uf.cleaned_data['password']))
+
             return redirect("home")
     else:
         uf = UserForm(prefix='user')
