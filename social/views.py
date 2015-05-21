@@ -45,6 +45,8 @@ def person(request, person_id, feedback_form=None):
     feedback_form = feedback_form or FeedbackForm()
     return render(request, "person.html", {"person": person, "feedbacks": feedbacks, "form": feedback_form})
 
+
+
 @login_required
 def send_feedback(request, person_id):
     if request.method == 'POST':
@@ -54,4 +56,16 @@ def send_feedback(request, person_id):
             feedback.author = request.user.userprofile
             feedback.estimated = UserProfile.objects.get(id=person_id)
             feedback.save()
+    return redirect("person", person_id=person_id)
+
+@login_required
+def person_follow(request, person_id):
+    request.user.userprofile.following.add(UserProfile.objects.get(user=person_id))
+    print request.user.userprofile.following.all()
+    return redirect("person", person_id=person_id)
+
+@login_required
+def person_unfollow(request, person_id):
+    print request.user.userprofile.following.all()
+    request.user.userprofile.following.remove(UserProfile.objects.get(user=person_id))
     return redirect("person", person_id=person_id)

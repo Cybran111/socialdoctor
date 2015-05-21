@@ -6,6 +6,15 @@
       <div class="panel-heading">
         <h3 class="panel-title">
             {{ person.user.first_name }} {{ person.user.last_name }}
+            
+            {% ifnotequal user.userprofile person %}
+                {% if person in user.userprofile.following.all  %}
+                    <a href="{% url "unfollow" person.user.id %}" class="btn btn-info btn-sm">Відписатися</a>
+                {% else %}
+                    <a href="{% url "follow" person.user.id %}" class="btn btn-success btn-sm">Підписатися</a>
+                {% endif %}
+            {% endifnotequal %}
+
             {% if person.user_type == "doctor" %}
                 <span class="glyphicon glyphicon-plus pull-right" aria-hidden="true">Доктор</span>
             {% elif person.user_type == "patient" %}

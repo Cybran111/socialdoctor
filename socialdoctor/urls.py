@@ -15,6 +15,9 @@ urlpatterns = [
 
     url(r'^person/(?P<person_id>\d+)/$', 'social.views.person', name='person'),
 
+    url(r'^person/(?P<person_id>\d+)/follow$', 'social.views.person_follow', name='follow'),
+    url(r'^person/(?P<person_id>\d+)/unfollow$', 'social.views.person_unfollow', name='unfollow'),
+
     url(r'^person/(?P<person_id>\d+)/send_feedback/$', 'social.views.send_feedback', name='send_feedback'),
 
     url(r'^admin/', include(admin.site.urls)),
