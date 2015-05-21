@@ -28,6 +28,10 @@
           <dl class="dl-horizontal">
               <dt>Псевдонім: </dt>
               <dd>{{ person.user.username }}</dd>
+              {% if person.is_doctor %}
+              <dt> Спеціальність: </dt>
+              <dd>{{ person.doctor_type }}</dd>
+              {% endif %}
             </dl>
       </div>
     </div>
