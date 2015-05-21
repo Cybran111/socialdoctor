@@ -13,6 +13,8 @@
       <a href="{% url "person" person.id %}" >{{ person.first_name }} {{ person.last_name }}</a>
     </span>
   </li>
+    {% empty %}
+    <li>Вибачте, але ми нічого не знайшли</li>
 {% endfor %}
 </ul>
 
