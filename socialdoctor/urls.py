@@ -21,6 +21,7 @@ urlpatterns = [
 
     url(r'^person/(?P<person_id>\d+)/send_feedback/$', 'social.views.send_feedback', name='send_feedback'),
     url(r'^person/search/$', 'social.views.search', name='search'),
+    url(r'^person/search/doctors/$', 'social.views.search_doctors', name='search_doctors'),
 
     url(r'^admin/', include(admin.site.urls)),
 ]

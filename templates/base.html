@@ -24,7 +24,9 @@
         <div class="navbar-header">
             <a class="navbar-brand" href="{% url "home" %}"> Social Doctor</a>
         </div>
-
+        <ul class="nav navbar-nav">
+            <li><a class=""  href="{% url "search_doctors" %}">Лікарі</a></li>
+        </ul>
         <div class="navbar-right">
 
         <form action="{% url "search" %}" class="navbar-form navbar-left" role="search">
