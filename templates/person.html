@@ -30,7 +30,7 @@
               <dd>{{ person.user.username }}</dd>
               {% if person.is_doctor %}
               <dt> Спеціальність: </dt>
-              <dd>{{ person.get_doctor_type_display }}</dd>
+              <dd>{{ person.get_doctor_type_display|capfirst }}</dd>
               {% endif %}
             </dl>
       </div>
