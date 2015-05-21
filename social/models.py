@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
 
@@ -23,7 +24,7 @@ class UserProfile(models.Model):
 class Feedback(models.Model):
     author = models.ForeignKey(UserProfile, related_name="feedback_author")
     estimated = models.ForeignKey(UserProfile, related_name="feedback_estimated")
-    rating = models.IntegerField()
+    rating = models.IntegerField(validators=[MaxValueValidator(5), MinValueValidator(1)])
     text = models.TextField()
     date_created = models.DateTimeField(auto_now_add=True)
 
