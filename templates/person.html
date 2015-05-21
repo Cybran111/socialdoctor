@@ -2,14 +2,34 @@
 
 {% block content %}
 
-    {{ person.user.first_name }} "{{ person.user.username }}" {{ person.user.last_name }}
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+            {{ person.user.first_name }} {{ person.user.last_name }}
+            {% if person.user_type == "doctor" %}
+                <span class="glyphicon glyphicon-plus pull-right" aria-hidden="true">Доктор</span>
+            {% elif person.user_type == "patient" %}
+                <span class="glyphicon glyphicon-user pull-right" aria-hidden="true">Паціент</span>
+            {% endif %}
+        </h3>
+      </div>
+      <div class="panel-body">
+
+
+          <dl class="dl-horizontal">
+              <dt>Псевдонім: </dt>
+              <dd>{{ person.user.username }}</dd>
+            </dl>
+      </div>
+    </div>
+
+
 
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title">Підписники</h3>
       </div>
       <div class="panel-body">
-
         {% for following in person.userprofile_set.all %}
             <a href="{% url "person" following.id %}">{{ following }}</a>
         {% endfor %}
@@ -44,29 +64,30 @@
                     <p>{{ feedback.text }}</p>
 
                 </li>
-
+            {% empty %}
+                <li class="list-group-item list-group">
+                    <p>Відгуків ще немає</p>
+                </li>
             {% endfor %}
 
   </ul>
 </div>
 
-
-    {% if user.is_authenticated %}
+    {% if user.is_authenticated and person.user_type == 'doctor' %}
 
         <form action="{% url "send_feedback" person.id %}" method="POST" class="form-inline">
         {% csrf_token %}
       <div class="form-group">
-        <label for="feedback_text">Text</label>
-        <input name="text" type="text" class="form-control" id="feedback_text" placeholder="Enter the text">
+        <label for="feedback_text">Відгук</label>
+        <input name="text" type="text" class="form-control" id="feedback_text" placeholder="Введіть відгук">
       </div>
       <div class="form-group">
-        <label for="feedback_rating">Rating</label>
-        <input name="rating" type="number" class="form-control" id="feeback_rating" placeholder="Enter your rating">
+        <label for="feedback_rating">Оцінка</label>
+        <input name="rating" type="number" class="form-control" id="feeback_rating" placeholder="Введіть оцінку">
       </div>
-      <button type="submit" class="btn btn-default">Send feedback</button>
+      <button type="submit" class="btn btn-default">Відправити відгук</button>
 
         </form>
-
 
     {% endif %}
 {% endblock %}
