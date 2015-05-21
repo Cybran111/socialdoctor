@@ -1,5 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
+from django.forms import Textarea, ModelChoiceField, Select
+from django.forms import ChoiceField
 from social.models import UserProfile, Feedback
 
 class SearchForm(forms.Form):
@@ -14,7 +16,8 @@ class UserForm(forms.ModelForm):
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ['user_type']
+        fields = ['doctor_type', 'is_doctor']
+        widgets = {'doctor_type': Select(choices=UserProfile.TYPE_CHOICES, attrs={'class': "form-control"})}
 
 
 class FeedbackForm(forms.ModelForm):

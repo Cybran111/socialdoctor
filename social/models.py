@@ -1,3 +1,4 @@
+# coding=utf-8
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
@@ -6,16 +7,21 @@ from django.db import models
 # Create your models here.
 class UserProfile(models.Model):
     TYPE_CHOICES = (
-        ("doctor", 'Doctor'),
-        ('patient', 'Patient'),
+        ("surgeon", 'хірург'),
+        ("pediatrician", "педіатр"),
+        ("therapist", "терапевт"),
+        ("dentist", "стоматолог"),
+        ("ophthalmologist", "офтальмолог"),
+        ("psychiatrist", "психіатр"),
     )
 
     user = models.OneToOneField(User)
+    is_doctor = models.BooleanField()
     following = models.ManyToManyField("self", symmetrical=False, blank=True)
     feedback = models.ManyToManyField("UserProfile", through="Feedback",
                                       through_fields=('author', 'estimated'),
                                       related_name="user_feedbacks")
-    user_type = models.TextField(choices=TYPE_CHOICES)
+    doctor_type = models.TextField(choices=TYPE_CHOICES, blank=True)
 
     def __unicode__(self):
         return self.user.username

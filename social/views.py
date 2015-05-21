@@ -25,6 +25,9 @@ def register(request):
 
             userprofile = upf.save(commit=False)
             userprofile.user = user
+            if not userprofile.is_doctor and userprofile.doctor_type:
+                userprofile.doctor_type = ""
+
             userprofile.save()
 
             login(request, authenticate(username=uf.cleaned_data['username'], password=uf.cleaned_data['password']))
