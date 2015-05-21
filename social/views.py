@@ -48,8 +48,6 @@ def person(request, person_id, feedback_form=None):
 
 def search(request):
     form = SearchForm(request.GET)
-    print form
-    print form.is_valid()
     if form.is_valid():
         persons = User.objects.filter(username__contains=form.cleaned_data.get("username"))
         return render(request, "search.html", {'persons': persons})
