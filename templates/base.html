@@ -28,9 +28,10 @@
         <div class="navbar-right">
         {% if user.is_authenticated %}
 
-                <p class="navbar-text"> Ви зайшли як {{ user }} </p>
-                <a type="button" href="{% url "logout" %}" class="btn btn-default navbar-btn">Вийти</a>
-            </div>
+                        <a href="{% url "person" user.id %}" class="navbar-brand">
+                            <span class="glyphicon glyphicon-user" aria-hidden="true"> {{ user }} </span>
+                        </a>
+                    <a type="button" href="{% url "logout" %}" class="btn btn-default navbar-btn">Вийти</a>
         {% else %}
                 <p class="navbar-text">Ви неавторизовані</p>
                 <a href="{% url "login" %}" type="button" class="btn btn-default navbar-btn">Авторизуватися</a>
