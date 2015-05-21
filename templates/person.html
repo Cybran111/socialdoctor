@@ -56,21 +56,44 @@
 
   <!-- List group -->
         <ul class="list-group">
-            {% for feedback in feedbacks %}
+        {% if person.user_type == "doctor" %}
 
-                <li class="list-group-item">
-                    <span class="badge">{{ feedback.rating }}</span>
-                    <p>From: {{ feedback.author }}</p>
-                    <p>{{ feedback.text }}</p>
+                {% for feedback in feedbacks %}
+                    <li class="list-group-item">
+                        <span class="badge">{{ feedback.rating }}</span>
+                        <p>Від:
+                            <a href="{% url "person" feedback.author_id %}"> {{ feedback.author }} </a>
+                        </p>
+                        <p>{{ feedback.text }}</p>
 
-                </li>
-            {% empty %}
-                <li class="list-group-item list-group">
-                    <p>Відгуків ще немає</p>
-                </li>
-            {% endfor %}
+                    </li>
+                {% empty %}
+                    <li class="list-group-item list-group">
+                        <p>Відгуків ще немає</p>
+                    </li>
+                {% endfor %}
+            {% elif person.user_type == "patient" %}
 
-  </ul>
+
+                {% for feedback in feedbacks %}
+                    <li class="list-group-item">
+                        <span class="badge">{{ feedback.rating }}</span>
+                        <p>
+                            До:
+                            <a href="{% url "person" feedback.estimated_id %}"> {{ feedback.estimated }} </a>
+                        </p>
+                        <p>{{ feedback.text }}</p>
+
+                    </li>
+                {% empty %}
+                    <li class="list-group-item list-group">
+                        <p>Відгуків ще немає</p>
+                    </li>
+                {% endfor %}
+
+
+        {% endif %}
+        </ul>
 </div>
 
     {% if user.is_authenticated and person.user_type == 'doctor' %}

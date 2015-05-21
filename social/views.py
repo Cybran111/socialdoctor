@@ -37,7 +37,11 @@ def register(request):
 
 def person(request, person_id, feedback_form=None):
     person = UserProfile.objects.get(user=person_id)
-    feedbacks = Feedback.objects.filter(estimated=person)
+    if person.user_type == 'doctor':
+        feedbacks = Feedback.objects.filter(estimated=person)
+    elif person.user_type == 'patient':
+        feedbacks = Feedback.objects.filter(author=person)
+
     feedback_form = feedback_form or FeedbackForm()
     return render(request, "person.html", {"person": person, "feedbacks": feedbacks, "form": feedback_form})
 
