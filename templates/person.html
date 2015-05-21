@@ -15,9 +15,9 @@
                 {% endif %}
             {% endifnotequal %}
 
-            {% if person.user_type == "doctor" %}
+            {% if person.is_doctor" %}
                 <span class="glyphicon glyphicon-plus pull-right" aria-hidden="true">Лікар</span>
-            {% elif person.user_type == "patient" %}
+            {% else %}
                 <span class="glyphicon glyphicon-user pull-right" aria-hidden="true">Паціент</span>
             {% endif %}
         </h3>
@@ -65,7 +65,7 @@
 
   <!-- List group -->
         <ul class="list-group">
-        {% if person.user_type == "doctor" %}
+        {% if person.is_doctor %}
 
                 {% for feedback in feedbacks %}
                     <li class="list-group-item">
@@ -81,7 +81,7 @@
                         <p>Відгуків ще немає</p>
                     </li>
                 {% endfor %}
-            {% elif person.user_type == "patient" %}
+            {% else %}
 
 
                 {% for feedback in feedbacks %}
@@ -105,7 +105,7 @@
         </ul>
 </div>
 
-    {% if user.is_authenticated and person.user_type == 'doctor' %}
+    {% if user.is_authenticated and person.is_doctor %}
 
         <form action="{% url "send_feedback" person.id %}" method="POST" class="form-inline">
         {% csrf_token %}

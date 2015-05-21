@@ -41,9 +41,9 @@ def register(request):
 
 def person(request, person_id, feedback_form=None):
     person = UserProfile.objects.get(user=person_id)
-    if person.user_type == 'doctor':
+    if person.is_doctor:
         feedbacks = Feedback.objects.filter(estimated=person)
-    elif person.user_type == 'patient':
+    else:
         feedbacks = Feedback.objects.filter(author=person)
 
     feedback_form = feedback_form or FeedbackForm()
@@ -59,7 +59,7 @@ def search(request):
 
 
 def search_doctors(request):
-    return render(request, "search.html", {'persons': User.objects.filter(userprofile__user_type="doctor")})
+    return render(request, "search.html", {'persons': User.objects.filter(userprofile__is_doctor=True)})
 
 
 @login_required

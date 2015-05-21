@@ -5,9 +5,9 @@
 {% for person in persons %}
 
   <li class="list-group-item">
-    {% if person.userprofile.user_type == "doctor" %}
+    {% if person.userprofile.is_doctor %}
         <span class="glyphicon glyphicon-plus" aria-hidden="true">
-    {% elif person.userprofile.user_type == "patient" %}
+    {% else %}
         <span class="glyphicon glyphicon-user" aria-hidden="true">
     {% endif %}
       <a href="{% url "person" person.id %}" >{{ person.first_name }} {{ person.last_name }}</a>
