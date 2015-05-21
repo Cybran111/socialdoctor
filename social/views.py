@@ -1,9 +1,10 @@
 from django.contrib.auth import  login, authenticate
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 
 # Create your views here.
-from social.forms import UserForm, UserProfileForm, FeedbackForm
+from social.forms import UserForm, UserProfileForm, FeedbackForm, SearchForm
 from social.models import UserProfile, Feedback
 
 
@@ -45,7 +46,15 @@ def person(request, person_id, feedback_form=None):
     feedback_form = feedback_form or FeedbackForm()
     return render(request, "person.html", {"person": person, "feedbacks": feedbacks, "form": feedback_form})
 
-
+def search(request):
+    form = SearchForm(request.GET)
+    print form
+    print form.is_valid()
+    if form.is_valid():
+        persons = User.objects.filter(username__contains=form.cleaned_data.get("username"))
+        return render(request, "search.html", {'persons': persons})
+    else:
+        return redirect("home")
 
 @login_required
 def send_feedback(request, person_id):
@@ -61,11 +70,9 @@ def send_feedback(request, person_id):
 @login_required
 def person_follow(request, person_id):
     request.user.userprofile.following.add(UserProfile.objects.get(user=person_id))
-    print request.user.userprofile.following.all()
     return redirect("person", person_id=person_id)
 
 @login_required
 def person_unfollow(request, person_id):
-    print request.user.userprofile.following.all()
     request.user.userprofile.following.remove(UserProfile.objects.get(user=person_id))
     return redirect("person", person_id=person_id)

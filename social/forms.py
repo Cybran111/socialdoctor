@@ -2,6 +2,8 @@ from django import forms
 from django.contrib.auth.models import User
 from social.models import UserProfile, Feedback
 
+class SearchForm(forms.Form):
+    username = forms.CharField()
 
 class UserForm(forms.ModelForm):
     class Meta:

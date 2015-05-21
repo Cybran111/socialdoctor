@@ -14,6 +14,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 import os
 import dj_database_url
 from django.shortcuts import redirect
+from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS
 
 LOGIN_REDIRECT_URL = '/'
 
@@ -71,6 +72,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                "social.context_processors.search_form",
             ],
         },
     },
