@@ -2,7 +2,17 @@
 
 {% block content %}
 
-    <form method="POST" class="form-horizontal">
+<script>
+function enable()
+{
+    if(document.getElementById("{{ userprofileform.is_doctor.id_for_label }}").checked) {
+        document.getElementById("{{ userprofileform.doctor_type.id_for_label }}").removeAttribute("disabled");
+    } else {
+        document.getElementById("{{ userprofileform.doctor_type.id_for_label }}").setAttribute("disabled", "");
+    }
+}
+</script>
+    <form method="POST" class="form-horizontal" name="registerform">
         {% csrf_token %}
           {{ userform.non_field_errors }}
           <div class="form-group">

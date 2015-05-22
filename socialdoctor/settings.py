@@ -98,6 +98,7 @@ else:
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
 LANGUAGE_CODE = 'uk'
+LANGUAGES = (('uk', 'Ukrainian'),)
 
 TIME_ZONE = 'UTC'
 

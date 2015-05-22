@@ -13,6 +13,7 @@ class UserProfile(models.Model):
         ("dentist", "стоматолог"),
         ("ophthalmologist", "офтальмолог"),
         ("psychiatrist", "психіатр"),
+        ("neurologist", "невролог"),
     )
 
     user = models.OneToOneField(User)

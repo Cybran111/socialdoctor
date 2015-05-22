@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from django.forms import Textarea, ModelChoiceField, Select
+from django.forms import Textarea, ModelChoiceField, Select, CheckboxInput
 from django.forms import ChoiceField
 from social.models import UserProfile, Feedback
 
@@ -17,7 +17,10 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ['doctor_type', 'is_doctor']
-        widgets = {'doctor_type': Select(choices=UserProfile.TYPE_CHOICES, attrs={'class': "form-control"})}
+        widgets = {
+            'is_doctor': CheckboxInput(attrs={'onclick': "enable()"}),
+            'doctor_type': Select(choices=UserProfile.TYPE_CHOICES, attrs={'class': "form-control", 'disabled': ""})
+        }
 
 
 class FeedbackForm(forms.ModelForm):

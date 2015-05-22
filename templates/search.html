@@ -10,7 +10,12 @@
     {% else %}
         <span class="glyphicon glyphicon-user" aria-hidden="true">
     {% endif %}
-      <a href="{% url "person" person.id %}" >{{ person.first_name }} {{ person.last_name }}</a>
+      <a href="{% url "person" person.id %}" >
+          {{ person.first_name }} {{ person.last_name }}
+            {% if person.userprofile.is_doctor %}
+             <em>{{ person.doctor_type }}</em>
+          {% endif %}
+      </a>
     </span>
   </li>
     {% empty %}
