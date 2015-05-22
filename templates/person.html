@@ -2,7 +2,15 @@
 
 {% block content %}
 
-    <div class="panel panel-primary">
+    <div class="panel
+    {% if person.is_doctor %}
+    panel-primary
+    {% else %}
+    panel-success
+    {% endif %}
+    "
+
+            >
       <div class="panel-heading">
         <h3 class="panel-title">
             {{ person.user.first_name }} {{ person.user.last_name }}
