@@ -15,7 +15,7 @@
                 {% endif %}
             {% endifnotequal %}
 
-            {% if person.is_doctor" %}
+            {% if person.is_doctor %}
                 <span class="glyphicon glyphicon-plus pull-right" aria-hidden="true">Лікар</span>
             {% else %}
                 <span class="glyphicon glyphicon-user pull-right" aria-hidden="true">Паціент</span>
@@ -28,6 +28,10 @@
           <dl class="dl-horizontal">
               <dt>Псевдонім: </dt>
               <dd>{{ person.user.username }}</dd>
+              {% if person.is_doctor %}
+              <dt> Спеціальність: </dt>
+              <dd>{{ person.get_doctor_type_display|capfirst }}</dd>
+              {% endif %}
             </dl>
       </div>
     </div>
