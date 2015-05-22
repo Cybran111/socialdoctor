@@ -19,7 +19,7 @@
                 {% if person in user.userprofile.following.all  %}
                     <a href="{% url "unfollow" person.user.id %}" class="btn btn-info btn-sm">Відписатися</a>
                 {% else %}
-                    <a href="{% url "follow" person.user.id %}" class="btn btn-success btn-sm">Підписатися</a>
+                    <a href="{% url "follow" person.user.id %}" class="btn btn-warning btn-sm">Підписатися</a>
                 {% endif %}
             {% endifnotequal %}
 
