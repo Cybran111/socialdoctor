@@ -52,7 +52,10 @@
       </div>
       <div class="panel-body">
         {% for following in person.userprofile_set.all %}
-            <a href="{% url "person" following.id %}" class="text-success">{{ following }}</a>
+            <a href="{% url "person" following.id %}"
+                    {% if not following.is_doctor %}
+                    class="text-success"
+                    {% endif %}>{{ following }}</a>
         {% endfor %}
       </div>
     </div>
