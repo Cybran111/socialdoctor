@@ -42,6 +42,7 @@ def register(request):
 
 
 def person(request, person_id, feedback_form=None):
+    # print request.user.
     person = UserProfile.objects.get(user=person_id)
     if person.is_doctor:
         feedbacks = Feedback.objects.filter(estimated=person)
@@ -71,24 +72,27 @@ def search_patients(request):
 @login_required
 def messages(request, person_id):
     form = MessageForm(request.POST or None)
+    to_person = UserProfile.objects.get(id=person_id)
     if request.method == 'POST':
         if form.is_valid():
-            to_person = UserProfile.objects.get(id=person_id)
             Message.objects.create(from_person=request.user.userprofile,
                                    to_person=to_person,
                                    text=form.cleaned_data['text'])
-            MessageNotification.objects.create(from_person=request.user.userprofile, to_person=to_person)
+            if not MessageNotification.objects.get(from_person=request.user.userprofile, to_person=to_person):
+                MessageNotification.objects.create(from_person=request.user.userprofile, to_person=to_person)
         return redirect("messages", person_id)
     else:
         messages = Message.objects.filter(Q(from_person=request.user.userprofile, to_person=person_id) |
                                           Q(from_person=person_id, to_person=request.user.userprofile))
+        MessageNotification.objects.get(from_person=to_person, to_person=request.user.userprofile).delete()
         return render(request, 'messages.html', {"messages": messages, "send_form": form})
 
 
 @login_required
 def notifications(request):
-    notifications = MessageNotification.objects.filter(to_person=request.user.userprofile)
-    return render(render, 'notifications.html', {"notifications": notifications})
+    notification_set = MessageNotification.objects.filter(to_person=request.user.userprofile)
+    print notification_set
+    return render(request, 'notifications.html', {"notifications": notification_set})
 
 
 @login_required
