@@ -62,6 +62,9 @@ def search_doctors(request):
     return render(request, "search.html", {'persons': User.objects.filter(userprofile__is_doctor=True)})
 
 
+def search_patients(request):
+    return render(request, "search.html", {'persons': User.objects.filter(userprofile__is_doctor=False)})
+
 @login_required
 def send_feedback(request, person_id):
     if request.method == 'POST':
@@ -82,4 +85,3 @@ def person_follow(request, person_id):
 def person_unfollow(request, person_id):
     request.user.userprofile.following.remove(UserProfile.objects.get(user=person_id))
     return redirect("person", person_id=person_id)
-
