@@ -1,3 +1,4 @@
+# coding=utf-8
 from django import forms
 from django.contrib.auth.models import User
 from django.forms import Textarea, ModelChoiceField, Select, CheckboxInput
@@ -15,7 +16,7 @@ class UserForm(forms.ModelForm):
 
 
 class MessageForm(forms.Form):
-        text = forms.CharField()
+        text = forms.CharField(label="Текст повідомлення")
 
 class UserProfileForm(forms.ModelForm):
     class Meta:
