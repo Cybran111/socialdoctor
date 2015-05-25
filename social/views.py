@@ -84,7 +84,7 @@ def messages(request, person_id):
     else:
         messages = Message.objects.filter(Q(from_person=request.user.userprofile, to_person=person_id) |
                                           Q(from_person=person_id, to_person=request.user.userprofile))
-        notification = MessageNotification.objects.get(from_person=to_person, to_person=request.user.userprofile)
+        notification = MessageNotification.objects.filter(from_person=to_person, to_person=request.user.userprofile)
         if notification:
             notification.delete()
         return render(request, 'messages.html', {"messages": messages, "send_form": form})
