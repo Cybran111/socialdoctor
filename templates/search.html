@@ -13,7 +13,7 @@
       <a href="{% url "person" person.id %}" >
           {{ person.first_name }} {{ person.last_name }}
             {% if person.userprofile.is_doctor %}
-             <em>{{ person.userprofile.doctor_type }}</em>
+             <em>{{ person.userprofile.get_doctor_type_display }}</em>
                 {% if user.userprofile in person.userprofile.userprofile_set.all %}
                   <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
                 {% else %}
