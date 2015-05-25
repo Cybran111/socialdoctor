@@ -80,8 +80,12 @@ def messages(request, person_id):
 
         return redirect("messages", person_id)
     else:
-        messages = Message.objects.filter(Q(from_person=request.user.userprofile, to_person=person_id) |
-                                          Q(from_person=person_id, to_person=request.user.userprofile))
+
+        messages = Message.objects.filter(Q(from_person=request.user.userprofile, to_person=UserProfile.objects.get(id=person_id)) |
+                                          Q(from_person=UserProfile.objects.get(id=person_id), to_person=request.user.userprofile))
+
+        print messages.query
+        print messages
         return render(request, 'messages.html', {"messages": messages, "send_form": form})
 
 
