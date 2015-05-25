@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <ul class="list-group">
+    {% for notification in notifications %}
+
+      <li class="list-group-item">
+          <p>
+              <a href="{% url "messages" notification.from_person.id %}" >Від {{ notification.from_person }}</a>
+              </p>
+      </li>
+        {% empty %}
+        <li class="list-group-item">Немає нових повідомлень</li>
+    {% endfor %}
+    </ul>
+
+{% endblock %}

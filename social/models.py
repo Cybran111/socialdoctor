@@ -47,3 +47,11 @@ class Message(models.Model):
 
     def __unicode__(self):
         return "From: %s, To: %s, Text: %s" % (self.from_person, self.to_person, self.text)
+
+
+class MessageNotification(models.Model):
+    from_person = models.ForeignKey(UserProfile, related_name="notify_from")
+    to_person = models.ForeignKey(UserProfile, related_name="notify_to")
+
+    def __unicode__(self):
+        return "From: %s, To: %s" % (self.from_person, self.to_person)

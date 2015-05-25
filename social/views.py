@@ -7,7 +7,7 @@ from django.shortcuts import render, redirect
 # Create your views here.
 from django.shortcuts import render_to_response
 from social.forms import UserForm, UserProfileForm, FeedbackForm, SearchForm, MessageForm
-from social.models import UserProfile, Feedback, Message
+from social.models import UserProfile, Feedback, Message, MessageNotification
 
 
 def home(request):
@@ -72,21 +72,23 @@ def search_patients(request):
 def messages(request, person_id):
     form = MessageForm(request.POST or None)
     if request.method == 'POST':
-        print form.is_valid()
         if form.is_valid():
+            to_person = UserProfile.objects.get(id=person_id)
             Message.objects.create(from_person=request.user.userprofile,
-                                   to_person=UserProfile.objects.get(id=person_id),
+                                   to_person=to_person,
                                    text=form.cleaned_data['text'])
-
+            MessageNotification.objects.create(from_person=request.user.userprofile, to_person=to_person)
         return redirect("messages", person_id)
     else:
-
-        messages = Message.objects.filter(Q(from_person=request.user.userprofile, to_person=UserProfile.objects.get(id=person_id)) |
-                                          Q(from_person=UserProfile.objects.get(id=person_id), to_person=request.user.userprofile))
-
-        print messages.query
-        print messages
+        messages = Message.objects.filter(Q(from_person=request.user.userprofile, to_person=person_id) |
+                                          Q(from_person=person_id, to_person=request.user.userprofile))
         return render(request, 'messages.html', {"messages": messages, "send_form": form})
+
+
+@login_required
+def notifications(request):
+    notifications = MessageNotification.objects.filter(to_person=request.user.userprofile)
+    return render(render, 'notifications.html', {"notifications": notifications})
 
 
 @login_required

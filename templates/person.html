@@ -21,14 +21,13 @@
                 {% else %}
                     <a href="{% url "follow" person.user.id %}" class="btn btn-warning btn-sm">Підписатися</a>
                 {% endif %}
-            {% endifnotequal %}
-
             <a href="{% url "messages" person.id %}" class="btn btn-success">Повідомлення</a>
+            {% endifnotequal %}
 
             {% if person.is_doctor %}
                 <span class="glyphicon glyphicon-plus pull-right" aria-hidden="true">Лікар</span>
             {% else %}
-                <span class="glyphicon glyphicon-user pull-right" aria-hidden="true">Паціент</span>
+                <span class="glyphicon glyphicon-user pull-right" aria-hidden="true">Пацієнт</span>
             {% endif %}
         </h3>
       </div>
