@@ -37,3 +37,13 @@ class Feedback(models.Model):
 
     def __unicode__(self):
         return "From: %s, To: %s, Text: %s, Rating: %d" % (self.author, self.estimated, self.text, self.rating)
+
+
+class Message(models.Model):
+    from_person = models.ForeignKey(UserProfile, related_name="message_from")
+    to_person = models.ForeignKey(UserProfile, related_name="message_to")
+    date_created = models.DateTimeField(auto_now_add=True)
+    text = models.TextField()
+
+    def __unicode__(self):
+        return "From: %s, To: %s, Text: %s" % (self.from_person, self.to_person, self.text)

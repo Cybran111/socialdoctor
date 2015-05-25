@@ -16,10 +16,13 @@ urlpatterns = [
     url(r'^person/(?P<person_id>\d+)/$', 'social.views.person', name='person'),
     url(r'^person/search/(?P<person_id>\s+)/$', 'social.views.search', name='search'),
 
+    url(r'^person/(?P<person_id>\d+)/messages/$', 'social.views.messages', name='messages'),
+
     url(r'^person/(?P<person_id>\d+)/follow$', 'social.views.person_follow', name='follow'),
     url(r'^person/(?P<person_id>\d+)/unfollow$', 'social.views.person_unfollow', name='unfollow'),
 
     url(r'^person/(?P<person_id>\d+)/send_feedback/$', 'social.views.send_feedback', name='send_feedback'),
+    url(r'^person/search/$', 'social.views.search', name='search'),
     url(r'^person/search/$', 'social.views.search', name='search'),
     url(r'^person/search/doctors/$', 'social.views.search_doctors', name='search_doctors'),
     url(r'^person/search/patients/$', 'social.views.search_patients', name='search_patients'),

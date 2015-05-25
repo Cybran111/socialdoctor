@@ -23,6 +23,8 @@
                 {% endif %}
             {% endifnotequal %}
 
+            <a href="{% url "messages" person.id %}" class="btn btn-success">Повідомлення</a>
+
             {% if person.is_doctor %}
                 <span class="glyphicon glyphicon-plus pull-right" aria-hidden="true">Лікар</span>
             {% else %}

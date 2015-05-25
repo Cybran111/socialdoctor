@@ -1,11 +1,13 @@
 from django.contrib.auth import  login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.db.models import Q
 from django.shortcuts import render, redirect
 
 # Create your views here.
-from social.forms import UserForm, UserProfileForm, FeedbackForm, SearchForm
-from social.models import UserProfile, Feedback
+from django.shortcuts import render_to_response
+from social.forms import UserForm, UserProfileForm, FeedbackForm, SearchForm, MessageForm
+from social.models import UserProfile, Feedback, Message
 
 
 def home(request):
@@ -64,6 +66,24 @@ def search_doctors(request):
 
 def search_patients(request):
     return render(request, "search.html", {'persons': User.objects.filter(userprofile__is_doctor=False)})
+
+
+@login_required
+def messages(request, person_id):
+    form = MessageForm(request.POST or None)
+    if request.method == 'POST':
+        print form.is_valid()
+        if form.is_valid():
+            Message.objects.create(from_person=request.user.userprofile,
+                                   to_person=UserProfile.objects.get(id=person_id),
+                                   text=form.cleaned_data['text'])
+
+        return redirect("messages", person_id)
+    else:
+        messages = Message.objects.filter(Q(from_person=request.user.userprofile, to_person=person_id) |
+                                          Q(from_person=person_id, to_person=request.user.userprofile))
+        return render(request, 'messages.html', {"messages": messages, "send_form": form})
+
 
 @login_required
 def send_feedback(request, person_id):

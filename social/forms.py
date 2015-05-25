@@ -2,7 +2,8 @@ from django import forms
 from django.contrib.auth.models import User
 from django.forms import Textarea, ModelChoiceField, Select, CheckboxInput
 from django.forms import ChoiceField
-from social.models import UserProfile, Feedback
+from social.models import UserProfile, Feedback, Message
+
 
 class SearchForm(forms.Form):
     username = forms.CharField()
@@ -12,6 +13,9 @@ class UserForm(forms.ModelForm):
         model = User
         fields = ('username', 'first_name', 'last_name', 'email', 'password')
 
+
+class MessageForm(forms.Form):
+        text = forms.CharField()
 
 class UserProfileForm(forms.ModelForm):
     class Meta:
