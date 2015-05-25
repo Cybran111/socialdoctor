@@ -78,7 +78,7 @@ def messages(request, person_id):
             Message.objects.create(from_person=request.user.userprofile,
                                    to_person=to_person,
                                    text=form.cleaned_data['text'])
-            if not MessageNotification.objects.get(from_person=request.user.userprofile, to_person=to_person):
+            if not MessageNotification.objects.filter(from_person=request.user.userprofile, to_person=to_person):
                 MessageNotification.objects.create(from_person=request.user.userprofile, to_person=to_person)
         return redirect("messages", person_id)
     else:
