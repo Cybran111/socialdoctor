@@ -131,6 +131,6 @@ def editprofile(request):
                 request.user.userprofile.education = form.cleaned_data["education"]
                 request.user.userprofile.workplace = form.cleaned_data["workplace"]
                 request.user.userprofile.save()
-            return redirect("person", request.user)
+            return redirect("person", request.user.id)
 
     return render(request, 'editprofile.html', {"form": form})
