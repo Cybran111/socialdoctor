@@ -119,7 +119,7 @@ def person_unfollow(request, person_id):
 
 
 def editprofile(request):
-    if request.user.is_doctor:
+    if request.user.userprofile.is_doctor:
         form = DoctorProfileForm(request.POST or None)
     else:
         form = PatientProfileForm(request.POST or None)
