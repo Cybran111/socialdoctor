@@ -92,7 +92,6 @@ def messages(request, person_id):
 @login_required
 def notifications(request):
     notification_set = MessageNotification.objects.filter(to_person=request.user.userprofile)
-    print notification_set
     return render(request, 'notifications.html', {"notifications": notification_set})
 
 
@@ -132,6 +131,6 @@ def editprofile(request):
                 request.user.userprofile.education = form.cleaned_data["education"]
                 request.user.userprofile.workplace = form.cleaned_data["workplace"]
                 request.user.userprofile.save()
-            return redirect("profile", request.user)
+            return redirect("person", request.user)
 
     return render(request, 'editprofile.html', {"form": form})
