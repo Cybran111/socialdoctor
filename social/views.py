@@ -1,12 +1,11 @@
-from django.contrib.auth import  login, authenticate
+from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.db.models import Q
 from django.shortcuts import render, redirect
-
-# Create your views here.
 from django.shortcuts import render_to_response
-from social.forms import UserForm, UserProfileForm, FeedbackForm, SearchForm, MessageForm
+from social.forms import UserForm, UserProfileForm, FeedbackForm, SearchForm, MessageForm, DoctorProfileForm, \
+    PatientProfileForm
 from social.models import UserProfile, Feedback, Message, MessageNotification
 
 
@@ -117,3 +116,21 @@ def person_follow(request, person_id):
 def person_unfollow(request, person_id):
     request.user.userprofile.following.remove(UserProfile.objects.get(user=person_id))
     return redirect("person", person_id=person_id)
+
+
+def editprofile(request):
+    if request.user.is_doctor:
+        form = DoctorProfileForm(request.POST or None)
+    else:
+        form = PatientProfileForm(request.POST or None)
+
+    if request.method == "POST":
+        if form.is_valid():
+            request.user.userprofile.aboutme = form.cleaned_data["aboutme"]
+            if request.user.is_doctor:
+                request.user.userprofile.qualification = form.cleaned_data["qualification"]
+                request.user.userprofile.education = form.cleaned_data["education"]
+                request.user.userprofile.workplace = form.cleaned_data["workplace"]
+                request.user.userprofile.save()
+
+    return render(request, 'editprofile.html', {"form": form})

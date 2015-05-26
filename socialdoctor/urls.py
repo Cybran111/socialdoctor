@@ -18,6 +18,7 @@ urlpatterns = [
 
     url(r'^person/(?P<person_id>\d+)/messages/$', 'social.views.messages', name='messages'),
     url(r'^person/notifications/$', 'social.views.notifications', name='notifications'),
+    url(r'^person/edit/$', 'social.views.editprofile', name='editprofile'),
 
     url(r'^person/(?P<person_id>\d+)/follow$', 'social.views.person_follow', name='follow'),
     url(r'^person/(?P<person_id>\d+)/unfollow$', 'social.views.person_unfollow', name='unfollow'),

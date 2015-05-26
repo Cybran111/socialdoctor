@@ -24,6 +24,11 @@ class UserProfile(models.Model):
                                       related_name="user_feedbacks")
     doctor_type = models.TextField(choices=TYPE_CHOICES, blank=True)
 
+    qualification = models.TextField(blank=True)
+    education = models.TextField(blank=True)
+    workplace = models.TextField(blank=True)
+    aboutme = models.TextField(blank=True)
+
     def __unicode__(self):
         return self.user.username
 

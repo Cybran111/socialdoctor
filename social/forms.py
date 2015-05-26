@@ -15,6 +15,18 @@ class UserForm(forms.ModelForm):
         fields = ('username', 'first_name', 'last_name', 'email', 'password')
 
 
+class DoctorProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ('qualification', 'education', 'workplace', 'aboutme')
+
+
+class PatientProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ('aboutme',)
+
+
 class MessageForm(forms.Form):
         text = forms.CharField(label="Текст повідомлення")
 
