@@ -127,7 +127,7 @@ def editprofile(request):
     if request.method == "POST":
         if form.is_valid():
             request.user.userprofile.aboutme = form.cleaned_data["aboutme"]
-            if request.user.is_doctor:
+            if request.user.userprofile.is_doctor:
                 request.user.userprofile.qualification = form.cleaned_data["qualification"]
                 request.user.userprofile.education = form.cleaned_data["education"]
                 request.user.userprofile.workplace = form.cleaned_data["workplace"]
