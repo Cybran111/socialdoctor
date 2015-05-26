@@ -20,11 +20,20 @@ class DoctorProfileForm(forms.ModelForm):
         model = UserProfile
         fields = ('qualification', 'education', 'workplace', 'aboutme')
 
+        labels = {
+            'qualification': 'Кваліфікація',
+            'education': "Освіта",
+            'workplace': "Місце роботи",
+            'aboutme': "Про себе"
+        }
+
 
 class PatientProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('aboutme',)
+
+        labels = {'aboutme': 'Про себе'}
 
 
 class MessageForm(forms.Form):
