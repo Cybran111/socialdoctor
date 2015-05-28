@@ -21,11 +21,17 @@ class DoctorProfileForm(forms.ModelForm):
         fields = ('qualification', 'education', 'workplace', 'aboutme')
 
         labels = {
-            'qualification': 'Кваліфікація',
-            'education': "Освіта",
-            'workplace': "Місце роботи",
-            'aboutme': "Про себе"
+            'qualification': u'Кваліфікація',
+            'education': u"Освіта",
+            'workplace': u"Місце роботи",
+            'aboutme': u"Про себе"
         }
+
+        widgets = {
+            'qualification': Textarea(attrs={'cols': 40, 'rows': 5}),
+            'education': Textarea(attrs={'cols': 40, 'rows': 5}),
+            'workplace': Textarea(attrs={'cols': 40, 'rows': 5}),
+            'aboutme': Textarea(attrs={'cols': 40, 'rows': 5})}
 
 
 class PatientProfileForm(forms.ModelForm):
