@@ -32,8 +32,8 @@ class PatientProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('aboutme',)
-
-        labels = {'aboutme': 'Про себе'}
+        labels = {'aboutme': u'Про себе'}
+        widgets = {'aboutme': Textarea(attrs={'cols': 40, 'rows': 5})}
 
 
 class MessageForm(forms.Form):
