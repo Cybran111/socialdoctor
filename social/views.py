@@ -3,7 +3,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.db.models import Q
 from django.shortcuts import render, redirect
-from django.shortcuts import render_to_response
 from social.forms import UserForm, UserProfileForm, FeedbackForm, SearchForm, MessageForm, DoctorProfileForm, \
     PatientProfileForm
 from social.models import UserProfile, Feedback, Message, MessageNotification
@@ -116,7 +115,7 @@ def person_unfollow(request, person_id):
     request.user.userprofile.following.remove(UserProfile.objects.get(user=person_id))
     return redirect("person", person_id=person_id)
 
-
+@login_required
 def editprofile(request):
     if request.user.userprofile.is_doctor:
         form = DoctorProfileForm(request.POST or None)
